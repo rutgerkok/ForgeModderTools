@@ -1,0 +1,13 @@
+# Compiled classes
+*.class
+
+
+# Package Files
+*.jar
+*.war
+*.ear
+
+# IDEs
+*.classpath
+*.project
+*.prefs
