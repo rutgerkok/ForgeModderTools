@@ -7,6 +7,12 @@
 	<version>1.0.0-SNAPSHOT</version>
 	<name>ForgeJars</name>
 	<description>Builds Forge jars with all method implementations removed.</description>
+	
+	<properties>
+		<minecraftVersion>1.6.4</minecraftVersion>
+		<forgeVersion>9.11.0.884</forgeVersion>
+		<forgeModLoaderCommit>25981706ef12654b6c2baccc80fa2298bb5afb4a</forgeModLoaderCommit>
+	</properties>
 
 	<build>
 		<plugins>
@@ -23,6 +29,12 @@
 						</goals>
 					</execution>
 				</executions>
+				<configuration>
+					<minecraftClientUrl>http://s3.amazonaws.com/Minecraft.Download/versions/${minecraftVersion}/${minecraftVersion}.jar</minecraftClientUrl>
+					<minecraftServerUrl>http://s3.amazonaws.com/Minecraft.Download/versions/${minecraftVersion}/minecraft_server.${minecraftVersion}.jar</minecraftServerUrl>
+					<forgeUrl>http://files.minecraftforge.net/minecraftforge/minecraftforge-universal-${minecraftVersion}-${forgeVersion}.jar</forgeUrl>
+					<mcpDirectory>https://raw.github.com/MinecraftForge/FML/${forgeModLoaderCommit}/conf/</mcpDirectory>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

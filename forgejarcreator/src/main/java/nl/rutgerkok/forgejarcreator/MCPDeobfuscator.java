@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.common.collect.Lists;
-
 import net.md_5.specialsource.AccessMap;
 import net.md_5.specialsource.Jar;
 import net.md_5.specialsource.JarMapping;
@@ -14,12 +12,16 @@ import net.md_5.specialsource.JarRemapper;
 import net.md_5.specialsource.RemapperPreprocessor;
 import net.md_5.specialsource.provider.JarProvider;
 
+import com.google.common.collect.Lists;
+
 /**
  * Deobfucates all classes, fields and methods in Minecraft's client or server
  * JAR file using the mappings created by the MCP team.
  * 
  */
 public class MCPDeobfuscator {
+    private final String url;
+
     private List<String> excludedPackages = new ArrayList<String>();
     private String inShadeRelocation;
     private String outShadeRelocation;
@@ -28,6 +30,16 @@ public class MCPDeobfuscator {
 
     private JarMapping obfuscatedToSeargeMapping;
     private JarMapping seargeToNumericMapping;
+
+    /**
+     * Creates a new deobfuscator.
+     * 
+     * @param url
+     *            The url of the directory to load the mappings from.
+     */
+    public MCPDeobfuscator(String url) {
+        this.url = url;
+    }
 
     /**
      * Converts the file from the obfuscated mappings to Searge mappings.
@@ -125,7 +137,7 @@ public class MCPDeobfuscator {
                 mapping.addExcludedPackage(packageName);
             }
         }
-        mapping.loadMappings(Constants.MCP_DIRECTORY, reverse, numeric, inShadeRelocation, outShadeRelocation);
+        mapping.loadMappings(url, reverse, numeric, inShadeRelocation, outShadeRelocation);
         return mapping;
     }
 }
