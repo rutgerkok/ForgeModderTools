@@ -2,16 +2,21 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-
 	<groupId>nl.rutgerkok</groupId>
-	<artifactId>forgejarcreator</artifactId>
+	<artifactId>forgejarcreator-maven-plugin</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>ForgeJarCreator</name>
+	<packaging>maven-plugin</packaging>
 	<description>
 		Unofficial creator of a Jar file with empty methods for Forge mods to build against.
 	</description>
 
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
 	<repositories>
+		<!-- For SpecialSource -->
 		<repository>
 			<id>sonatype-repo</id>
 			<name>Sonatype Nexus Snapshots</name>
@@ -23,6 +28,8 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</repository>
+
+		<!-- For LZMA -->
 		<repository>
 			<id>mojang-repo</id>
 			<url>http://s3.amazonaws.com/Minecraft.Download/libraries/</url>
@@ -30,6 +37,20 @@
 	</repositories>
 
 	<dependencies>
+		<!-- Maven -->
+		<dependency>
+			<groupId>org.apache.maven</groupId>
+			<artifactId>maven-plugin-api</artifactId>
+			<version>2.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.maven.plugin-tools</groupId>
+			<artifactId>maven-plugin-annotations</artifactId>
+			<version>3.2</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- Other -->
 		<dependency>
 			<groupId>net.md-5</groupId>
 			<artifactId>SpecialSource</artifactId>
@@ -46,4 +67,27 @@
 			<version>0.0.1</version>
 		</dependency>
 	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-plugin-plugin</artifactId>
+				<version>3.2</version>
+				<configuration>
+					<!-- See http://jira.codehaus.org/browse/MNG-5346 -->
+					<skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
+				</configuration>
+				<executions>
+					<execution>
+						<id>mojo-descriptor</id>
+						<goals>
+							<goal>descriptor</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
 </project>
