@@ -22,32 +22,32 @@ public class Main extends AbstractMojo {
     /**
      * Online (or offline) location of the MCP mappings.
      */
-    @Parameter(property = "forgejarcreator.mcpDirectory")
+    @Parameter
     private String mcpDirectory;
 
     /**
      * URL of the Minecraft client for the current {@link #minecrafVersion}.
      */
-    @Parameter(property = "forgejarcreator.minecraftClientUrl")
+    @Parameter
     private String minecraftClientUrl;
 
     /**
      * URL of the Minecraft server for the current {@link #minecraftVersion}.
      */
-    @Parameter(property = "forgejarcreator.minecraftServerUrl")
+    @Parameter
     private String minecraftServerUrl;
 
     /**
      * URL of the Forge universal mod for the current {@link #minecraftVersion}
      * and {@link #forgeVersion}.
      */
-    @Parameter(property = "forgejarcreator.forgeUrl")
+    @Parameter
     private String forgeUrl;
 
     /**
      * Name of the binary patches file, found in the Forge zip.
      */
-    @Parameter(property = "forgejarcreator.patchesFileInForge", defaultValue = "binpatches.pack.lzma")
+    @Parameter(defaultValue = "binpatches.pack.lzma")
     private String patchesFileInForge;
 
     /**
