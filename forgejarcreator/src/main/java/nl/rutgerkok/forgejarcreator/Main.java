@@ -11,13 +11,21 @@ import nl.rutgerkok.forgejarcreator.patch.MinecraftJar;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugins.annotations.Component;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
+import org.apache.maven.project.MavenProject;
 
 import com.google.common.io.Files;
 
 @Mojo(name = "forgejarcreator")
 public class Main extends AbstractMojo {
+    /**
+     * The Maven project, used to get information about the output file
+     * location.
+     */
+    @Component
+    private MavenProject project;
 
     /**
      * Online (or offline) location of the MCP mappings.
@@ -99,13 +107,14 @@ public class Main extends AbstractMojo {
         forgePatcher.patchJarFile(clientRenamedJar, patchesStream, side);
         patchesStream.close();
         clientRenamedJar.writeToFile(mojangTemporaryJarFile);
-        System.out.println("Applied patches by Forge!");
+        getLog().info("Applied patches by Forge!");
 
         // Rename fields, methods and classes in file
-        mappings.deobfuscate(forgeJar, mojangTemporaryJarFile, new File(side.toString().toLowerCase() + ".jar"));
+        File outputJar = project.getArtifact().getFile();
+        mappings.deobfuscate(forgeJar, mojangTemporaryJarFile, outputJar);
         System.err.println("But for us this is normal, as both the Forge and Minecraft jars have a Main class.");
         mojangTemporaryJarFile.deleteOnExit();
-        System.out.println("Renamed!");
+        getLog().info("Renamed!");
     }
 
     /**
