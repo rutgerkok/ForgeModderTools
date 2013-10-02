@@ -4,13 +4,13 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>nl.rutgerkok</groupId>
 	<artifactId>forgejars</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>9.11.0.884</version>
 	<name>ForgeJars</name>
 	<description>Builds Forge jars with all method implementations removed.</description>
 	
 	<properties>
 		<minecraftVersion>1.6.4</minecraftVersion>
-		<forgeVersion>9.11.0.884</forgeVersion>
+		<forgeVersion>${project.version}</forgeVersion>
 		<forgeModLoaderCommit>25981706ef12654b6c2baccc80fa2298bb5afb4a</forgeModLoaderCommit>
 	</properties>
 
