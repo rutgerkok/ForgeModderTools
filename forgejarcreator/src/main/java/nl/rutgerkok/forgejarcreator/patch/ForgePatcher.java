@@ -21,7 +21,7 @@ import LZMA.LzmaInputStream;
 public class ForgePatcher {
     private static final String CLIENT_PATCH_PREFIX = "binpatch/client/";
     private static final String SERVER_PATCH_PREFIX = "binpatch/server/";
-    
+
     public ForgePatcher() {
     }
 
@@ -74,8 +74,8 @@ public class ForgePatcher {
             // Read each entry, ignoring directories
             if (!replacingClass.isDirectory()) {
                 String patchFileName = replacingClass.getName();
-                
-                if(isPatchOnSide(patchFileName, side)) {
+
+                if (isPatchOnSide(patchFileName, side)) {
                     // Only patch when on the corret side
                     ClassPatch patch = readPatch(patchStream);
                     fileToPatch.patch(patch);
@@ -88,13 +88,19 @@ public class ForgePatcher {
     }
 
     /**
-     * Gets whether the patch is on the correct side. For example, if the patch is made for serves it returns false when the side parameter is set to {@link Side#CLIENT}.
-     * @param patchFileName Name of the patch file.
-     * @param side The side the patch should be on.
-     * @return True if the patch is actually on the correct side, false otherwise.
+     * Gets whether the patch is on the correct side. For example, if the patch
+     * is made for serves it returns false when the side parameter is set to
+     * {@link Side#CLIENT}.
+     * 
+     * @param patchFileName
+     *            Name of the patch file.
+     * @param side
+     *            The side the patch should be on.
+     * @return True if the patch is actually on the correct side, false
+     *         otherwise.
      */
     private boolean isPatchOnSide(String patchFileName, Side side) {
-        if(side == Side.CLIENT) {
+        if (side == Side.CLIENT) {
             return patchFileName.startsWith(CLIENT_PATCH_PREFIX);
         } else {
             return patchFileName.startsWith(SERVER_PATCH_PREFIX);

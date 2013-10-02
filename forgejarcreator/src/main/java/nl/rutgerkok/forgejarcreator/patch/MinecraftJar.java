@@ -58,7 +58,7 @@ public class MinecraftJar {
         // Make name correct for usage by Minecraft
         String patchName = patch.targetClassName;
         patchName = patchName.replace('.', '/');
-        
+
         // Try to get obfuscated name (not all classes are obfuscated)
         String patchNameObfuscated = mappings.get(patchName);
         if (patchNameObfuscated != null) {
@@ -66,7 +66,7 @@ public class MinecraftJar {
         } else {
             System.err.println("Missing mapping for " + patch.targetClassName + ", cannot patch.");
         }
-        
+
         // Append .class to get file name
         patchName = patchName + ".class";
 
