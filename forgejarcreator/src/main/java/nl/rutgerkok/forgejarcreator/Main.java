@@ -51,6 +51,13 @@ public class Main extends AbstractMojo {
     private String patchesFileInForge;
 
     /**
+     * The side to compile for. Please note the the client also includes the
+     * server files, but that the server doesn't include the client files.
+     */
+    @Parameter(defaultValue = "CLIENT")
+    private String side;
+
+    /**
      * Downloads the jars, patches them with the binary patches by Forge,
      * removes all method implementations and renames the classes, fields and
      * methods. Result: a Forge jar for people to build against.
@@ -65,34 +72,61 @@ public class Main extends AbstractMojo {
     }
 
     private void execute0() throws IOException {
-        // Download
-        File clientDownloadedJar = FileLocator.getFile(minecraftClientUrl);
-        // File serverJar = FileLocator.getFile(minecraftServerUrl);
+        Side side = this.getSide();
+
+        // Get client or server file
+        File mojangDownloadedJar = null;
+        switch (side) {
+            case CLIENT:
+                mojangDownloadedJar = FileLocator.getFile(minecraftClientUrl);
+                break;
+            case SERVER:
+                mojangDownloadedJar = FileLocator.getFile(minecraftServerUrl);
+                break;
+        }
+
+        // Get Forge file
         File forgeJar = FileLocator.getFile(forgeUrl);
         System.out.println("Downloaded!");
 
         // Move to other file
-        File clientTemporaryJarFile = new File("clienttemp.jar");
-        Files.copy(clientDownloadedJar, clientTemporaryJarFile);
+        File mojangTemporaryJarFile = new File("mojangtemp.jar");
+        Files.copy(mojangDownloadedJar, mojangTemporaryJarFile);
 
         // Load mappings
         MCPDeobfuscator mappings = new MCPDeobfuscator(mcpDirectory);
 
         // Add missing methods (apply patches extracted from Forge jar)
-        MinecraftJar clientRenamedJar = new MinecraftJar(mappings, clientTemporaryJarFile);
+        MinecraftJar clientRenamedJar = new MinecraftJar(mappings, mojangTemporaryJarFile);
         ZipFile forgeZip = new ZipFile(forgeJar);
         ForgePatcher forgePatcher = new ForgePatcher();
         InputStream patchesStream = forgeZip.getInputStream(forgeZip.getEntry(patchesFileInForge));
-        forgePatcher.patchJarFile(clientRenamedJar, patchesStream, Side.CLIENT);
+        forgePatcher.patchJarFile(clientRenamedJar, patchesStream, side);
         patchesStream.close();
-        clientRenamedJar.writeToFile(clientTemporaryJarFile);
+        clientRenamedJar.writeToFile(mojangTemporaryJarFile);
         System.out.println("Applied patches by Forge!");
 
         // Rename fields, methods and classes in file
-        mappings.deobfuscate(forgeJar, clientTemporaryJarFile, new File("client.jar"));
+        mappings.deobfuscate(forgeJar, mojangTemporaryJarFile, new File(side.toString().toLowerCase() + ".jar"));
         System.err.println("But for us this is normal, as both the Forge and Minecraft jars have a Main class.");
-        clientTemporaryJarFile.deleteOnExit();
+        mojangTemporaryJarFile.deleteOnExit();
         System.out.println("Renamed!");
+    }
+
+    /**
+     * Gets the side, based on the {@link #side} property.
+     * 
+     * @return The side.
+     * @throws IOException
+     *             If the side cannot be read.
+     */
+    private Side getSide() throws IOException {
+        for (Side side : Side.values()) {
+            if (side.toString().equalsIgnoreCase(this.side)) {
+                return side;
+            }
+        }
+        throw new IOException(this.side + " is not a valid side!");
     }
 
 }
