@@ -25,7 +25,7 @@ public class MCPDeobfuscator {
     private List<String> excludedPackages = new ArrayList<String>();
     private String inShadeRelocation;
     private String outShadeRelocation;
-    private List<String> accessTransformers;
+    private String[] accessTransformers;
     private boolean generateAPI = true;
 
     private JarMapping obfuscatedToSeargeMapping;
@@ -36,9 +36,12 @@ public class MCPDeobfuscator {
      * 
      * @param url
      *            The url of the directory to load the mappings from.
+     * @param accessTransformers
+     *            The access transformers.
      */
-    public MCPDeobfuscator(String url) {
+    public MCPDeobfuscator(String url, String[] accessTransformers) {
         this.url = url;
+        this.accessTransformers = accessTransformers;
     }
 
     /**

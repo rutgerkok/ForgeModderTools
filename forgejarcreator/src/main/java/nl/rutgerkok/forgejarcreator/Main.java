@@ -58,6 +58,12 @@ public class Main extends AbstractMojo {
     private String side;
 
     /**
+     * List of AccessTransformer files/URLs to use.
+     */
+    @Parameter
+    private String[] accessTransformers;
+
+    /**
      * Downloads the jars, patches them with the binary patches by Forge,
      * removes all method implementations and renames the classes, fields and
      * methods. Result: a Forge jar for people to build against.
@@ -74,27 +80,16 @@ public class Main extends AbstractMojo {
     private void execute0() throws IOException {
         Side side = this.getSide();
 
-        // Get client or server file
-        File mojangDownloadedJar = null;
-        switch (side) {
-            case CLIENT:
-                mojangDownloadedJar = FileLocator.getFile(minecraftClientUrl);
-                break;
-            case SERVER:
-                mojangDownloadedJar = FileLocator.getFile(minecraftServerUrl);
-                break;
-        }
-
-        // Get Forge file
+        // Download files
+        File mojangDownloadedJar = getMojangFile(side);
         File forgeJar = FileLocator.getFile(forgeUrl);
-        System.out.println("Downloaded!");
 
         // Move to other file
         File mojangTemporaryJarFile = new File("mojangtemp.jar");
         Files.copy(mojangDownloadedJar, mojangTemporaryJarFile);
 
         // Load mappings
-        MCPDeobfuscator mappings = new MCPDeobfuscator(mcpDirectory);
+        MCPDeobfuscator mappings = new MCPDeobfuscator(mcpDirectory, accessTransformers);
 
         // Add missing methods (apply patches extracted from Forge jar)
         MinecraftJar clientRenamedJar = new MinecraftJar(mappings, mojangTemporaryJarFile);
@@ -127,6 +122,28 @@ public class Main extends AbstractMojo {
             }
         }
         throw new IOException(this.side + " is not a valid side!");
+    }
+
+    /**
+     * Downloads the appropriate file from Mojang's servers.
+     * 
+     * @param side
+     *            The side to download.
+     * @return The download file.
+     * @throws IOException
+     *             If the file cannot be downloaded.
+     * @throws IllegalArgumentException
+     *             If the side is not {@link Side#CLIENT} or {@link Side#SERVER}
+     *             . This is impossible as long as the enum isn't extendee.
+     */
+    private File getMojangFile(Side side) throws IOException {
+        switch (side) {
+            case CLIENT:
+                return FileLocator.getFile(minecraftClientUrl);
+            case SERVER:
+                return FileLocator.getFile(minecraftServerUrl);
+        }
+        throw new IllegalArgumentException("Unknown side " + side);
     }
 
 }
