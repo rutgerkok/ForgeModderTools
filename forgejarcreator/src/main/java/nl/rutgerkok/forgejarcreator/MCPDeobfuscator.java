@@ -2,8 +2,6 @@ package nl.rutgerkok.forgejarcreator;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import net.md_5.specialsource.AccessMap;
 import net.md_5.specialsource.Jar;
@@ -21,16 +19,9 @@ import com.google.common.collect.Lists;
  */
 public class MCPDeobfuscator {
     private final String url;
-
-    private List<String> excludedPackages = new ArrayList<String>();
-    private String inShadeRelocation;
-    private String outShadeRelocation;
     private String[] accessTransformers;
-    private boolean generateAPI = true;
-
     private JarMapping obfuscatedToSeargeMapping;
-    private JarMapping seargeToNumericMapping;
-
+    
     /**
      * Creates a new deobfuscator.
      * 
@@ -57,16 +48,12 @@ public class MCPDeobfuscator {
      *             If something goes wrong.
      */
     public void deobfuscate(File forgeJar, File from, File to) throws IOException {
-        execute(forgeJar, from, to, false);
-    }
-
-    private void execute(File forgeJar, File from, File to, boolean numeric) {
         // Remap
         try {
             Jar inJar = Jar.init(Lists.newArrayList(forgeJar, from));
 
             // Mappings
-            JarMapping mapping = numeric ? getSeargeToNumericMapping() : getObfuscatedToSeargeMapping();
+            JarMapping mapping = getObfuscatedToSeargeMapping();
             mapping.setFallbackInheritanceProvider(new JarProvider(inJar));
 
             // Access transformers
@@ -85,26 +72,11 @@ public class MCPDeobfuscator {
 
             // Do the remap
             JarRemapper remapper = new JarRemapper(preprocessor, mapping);
-            remapper.setGenerateAPI(generateAPI);
+            remapper.setGenerateAPI(true);
             remapper.remapJar(inJar, to);
         } catch (Exception e) {
             throw new RuntimeException("Error creating remapped jar at " + to + ": " + e.getMessage(), e);
         }
-    }
-
-    /**
-     * Gets the (possibly cached) mappings for Searge to numeric conversion.
-     * 
-     * @return The mappings.
-     * @throws IOException
-     *             If the mappings cannot be read.
-     */
-    public JarMapping getSeargeToNumericMapping() throws IOException {
-        if (seargeToNumericMapping == null) {
-            // Not loaded yet, load
-            seargeToNumericMapping = loadMappings(false, true);
-        }
-        return seargeToNumericMapping;
     }
 
     /**
@@ -135,12 +107,7 @@ public class MCPDeobfuscator {
      */
     private JarMapping loadMappings(boolean reverse, boolean numeric) throws IOException {
         JarMapping mapping = new JarMapping();
-        if (excludedPackages != null) {
-            for (String packageName : excludedPackages) {
-                mapping.addExcludedPackage(packageName);
-            }
-        }
-        mapping.loadMappings(url, reverse, numeric, inShadeRelocation, outShadeRelocation);
+        mapping.loadMappings(url, reverse, numeric, null, null);
         return mapping;
     }
 }
