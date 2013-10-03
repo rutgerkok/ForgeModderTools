@@ -1,0 +1,45 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>nl.rutgerkok</groupId>
+	<artifactId>examplemod</artifactId>
+	<version>1.0</version>
+	<name>ExampleMod</name>
+	<description>Mod to demonstrate and test the tools</description>
+
+	<dependencies>
+		<!-- Add this dependency to build against the Forge jar -->
+		<dependency>
+			<groupId>nl.rutgerkok</groupId>
+			<artifactId>forgejars</artifactId>
+			<version>${forgeVersion}</version>
+		</dependency>
+	</dependencies>
+
+	<properties>
+		<forgeVersion>9.11.0.884</forgeVersion>
+		<!-- TODO: don't force mods to include this -->
+		<mcpDirectory>https://raw.github.com/MinecraftForge/FML/25981706ef12654b6c2baccc80fa2298bb5afb4a/conf/</mcpDirectory>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>nl.rutgerkok</groupId>
+				<artifactId>forgemodrenamer-maven-plugin</artifactId>
+				<version>${forgeVersion}</version>
+				<executions>
+					<execution>
+						<id>remap-mod</id>
+						<phase>package</phase>
+						<goals>
+							<goal>forgemodrenamer</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+
+</project>

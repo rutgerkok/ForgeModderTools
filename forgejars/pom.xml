@@ -2,18 +2,17 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>nl.rutgerkok</groupId>
+
+	<parent>
+		<groupId>nl.rutgerkok</groupId>
+		<artifactId>forgeversionconstants</artifactId>
+		<version>9.11.0.884</version>
+		<relativePath>../</relativePath>
+	</parent>
+
 	<artifactId>forgejars</artifactId>
-	<version>9.11.0.884</version>
 	<name>ForgeJars</name>
 	<description>Builds Forge jars with all method implementations removed.</description>
-	
-	<properties>
-		<minecraftVersion>1.6.4</minecraftVersion>
-		<forgeVersion>${project.version}</forgeVersion>
-		<forgeCommit>be8bccc72eb080830fa57487987d48f0d36af3fa</forgeCommit>
-		<forgeModLoaderCommit>25981706ef12654b6c2baccc80fa2298bb5afb4a</forgeModLoaderCommit>
-	</properties>
 
 	<build>
 		<plugins>
@@ -30,16 +29,6 @@
 						</goals>
 					</execution>
 				</executions>
-				<configuration>
-					<minecraftClientUrl>http://s3.amazonaws.com/Minecraft.Download/versions/${minecraftVersion}/${minecraftVersion}.jar</minecraftClientUrl>
-					<minecraftServerUrl>http://s3.amazonaws.com/Minecraft.Download/versions/${minecraftVersion}/minecraft_server.${minecraftVersion}.jar</minecraftServerUrl>
-					<forgeUrl>http://files.minecraftforge.net/minecraftforge/minecraftforge-universal-${minecraftVersion}-${forgeVersion}.jar</forgeUrl>
-					<mcpDirectory>https://raw.github.com/MinecraftForge/FML/${forgeModLoaderCommit}/conf/</mcpDirectory>
-					<accessTransformers>
-						<accessTransformer>https://raw.github.com/MinecraftForge/FML/${forgeModLoaderCommit}/common/fml_at.cfg</accessTransformer>
-						<accessTransformer>https://raw.github.com/MinecraftForge/MinecraftForge/${forgeCommit}/common/forge_at.cfg</accessTransformer>
-					</accessTransformers>
-				</configuration>
 			</plugin>
 		</plugins>
 	</build>

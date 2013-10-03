@@ -30,26 +30,26 @@ public class Main extends AbstractMojo {
     /**
      * Online (or offline) location of the MCP mappings.
      */
-    @Parameter
+    @Parameter(defaultValue = "${mcpDirectory}")
     private String mcpDirectory;
 
     /**
      * URL of the Minecraft client for the current {@link #minecrafVersion}.
      */
-    @Parameter
+    @Parameter(defaultValue = "${minecraftClientUrl}")
     private String minecraftClientUrl;
 
     /**
      * URL of the Minecraft server for the current {@link #minecraftVersion}.
      */
-    @Parameter
+    @Parameter(defaultValue = "${minecraftServerUrl}")
     private String minecraftServerUrl;
 
     /**
      * URL of the Forge universal mod for the current {@link #minecraftVersion}
      * and {@link #forgeVersion}.
      */
-    @Parameter
+    @Parameter(defaultValue = "${forgeUrl}")
     private String forgeUrl;
 
     /**
@@ -66,10 +66,16 @@ public class Main extends AbstractMojo {
     private String side;
 
     /**
-     * List of AccessTransformer files/URLs to use.
+     * The Forge Mod Loader access transformer file/URL to use.
      */
-    @Parameter
-    private String[] accessTransformers;
+    @Parameter(defaultValue = "${fmleAccessTransformer}")
+    private String fmlAccessTransformer;
+
+    /**
+     * The Forge access transformer file/URL to use.
+     */
+    @Parameter(defaultValue = "${forgeAccessTransformer}")
+    private String forgeAccessTransformer;
 
     /**
      * Downloads the jars, patches them with the binary patches by Forge,
@@ -97,7 +103,7 @@ public class Main extends AbstractMojo {
         Files.copy(mojangDownloadedJar, mojangTemporaryJarFile);
 
         // Load mappings
-        MCPDeobfuscator mappings = new MCPDeobfuscator(mcpDirectory, accessTransformers);
+        MCPDeobfuscator mappings = new MCPDeobfuscator(mcpDirectory, new String[] { fmlAccessTransformer, forgeAccessTransformer });
 
         // Add missing methods (apply patches extracted from Forge jar)
         MinecraftJar clientRenamedJar = new MinecraftJar(mappings, mojangTemporaryJarFile);
