@@ -18,19 +18,20 @@ public class ExampleMod {
     public void load(FMLInitializationEvent event) {
         // This is the place where the mod starts loading
         System.out.println("Hello world! Example mod here!");
+
+        // Just test some things that should get remapped
         System.out.println("Slipperiness of ice is " + Block.ice.slipperiness);
+        TestBlock testBlock = new TestBlock();
+        GameRegistry.registerBlock(testBlock, "testBlock");
 
-        GameRegistry.registerBlock(new TestBlock(), "testBlock");
-
-        // Previous line will be remapped to something like this
-        // System.out.println("Slipperiness of ice is " + Block.field_72036_aT.field_72016_cq);
+        // Calling inherited methods should work too
+        testBlock.getTickRandomly();
     }
 
     public static class TestBlock extends Block {
 
         public TestBlock() {
             super(3000, Material.rock);
-            this.getTickRandomly();
         }
 
         @Override

@@ -2,11 +2,14 @@ package nl.rutgerkok.forgemodrenamer;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import net.md_5.specialsource.Jar;
 import net.md_5.specialsource.JarMapping;
 import net.md_5.specialsource.JarRemapper;
+import net.md_5.specialsource.provider.JarProvider;
 
+import org.apache.maven.artifact.Artifact;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -44,6 +47,7 @@ public class Main extends AbstractMojo {
      * location.
      * 
      * @throws IOException
+     *             If something goes wrong reading or writing the things.
      */
     private void execute0() throws IOException {
         File outputFile = project.getArtifact().getFile();
@@ -56,18 +60,15 @@ public class Main extends AbstractMojo {
 
         // Mappings
         JarMapping mapping = getSeargeToNumericMapping();
-
-        // Get all dependencies
-        // List<File> dependencies = new ArrayList<File>();
-        // mapping.setFallbackInheritanceProvider(new JarProvider(Jar.init(dependencies)));
-        // TODO: Fetch dependencies, needed for proper inheritance
+        Jar inJar = Jar.init(outputFile);
+        mapping.setFallbackInheritanceProvider(new JarProvider(inJar));
 
         // Do the remap
-        Jar inJar = Jar.init(outputFile);
         JarRemapper remapper = new JarRemapper(null, mapping);
         remapper.setGenerateAPI(false);
         remapper.remapJar(inJar, tempFile);
 
+        // Let tempFile replace the unmapped file
         Files.copy(tempFile, outputFile);
         tempFile.delete();
         this.getLog().info("Remapped artifact " + outputFile.getAbsolutePath());
