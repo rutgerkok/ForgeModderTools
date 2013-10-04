@@ -12,14 +12,12 @@
 		<dependency>
 			<groupId>nl.rutgerkok</groupId>
 			<artifactId>forgejars</artifactId>
-			<version>${forgeVersion}</version>
+			<version>${tforgeVersion}</version>
 		</dependency>
 	</dependencies>
 
 	<properties>
 		<forgeVersion>9.11.0.884</forgeVersion>
-		<!-- TODO: don't force mods to include this -->
-		<mcpDirectory>https://raw.github.com/MinecraftForge/FML/25981706ef12654b6c2baccc80fa2298bb5afb4a/conf/</mcpDirectory>
 	</properties>
 
 	<build>

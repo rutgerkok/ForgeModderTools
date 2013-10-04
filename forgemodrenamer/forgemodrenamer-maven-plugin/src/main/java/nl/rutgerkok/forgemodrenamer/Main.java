@@ -2,14 +2,12 @@ package nl.rutgerkok.forgemodrenamer;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 import net.md_5.specialsource.Jar;
 import net.md_5.specialsource.JarMapping;
 import net.md_5.specialsource.JarRemapper;
 import net.md_5.specialsource.provider.JarProvider;
 
-import org.apache.maven.artifact.Artifact;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -30,7 +28,7 @@ public class Main extends AbstractMojo {
     @Component
     private MavenProject project;
 
-    @Parameter(defaultValue = "${mcpDirectory}")
+    @Parameter(defaultValue = "")
     private String mcpDirectory;
 
     public void execute() throws MojoExecutionException, MojoFailureException {
@@ -51,6 +49,7 @@ public class Main extends AbstractMojo {
      */
     private void execute0() throws IOException {
         File outputFile = project.getArtifact().getFile();
+        RemapProperties fallbacks = new RemapProperties();
 
         // Move to temporary file
         File tempFile = File.createTempFile("forgemodrenamer", ".jar");
@@ -59,7 +58,7 @@ public class Main extends AbstractMojo {
         }
 
         // Mappings
-        JarMapping mapping = getSeargeToNumericMapping();
+        JarMapping mapping = getSeargeToNumericMapping(fallbacks);
         Jar inJar = Jar.init(outputFile);
         mapping.setFallbackInheritanceProvider(new JarProvider(inJar));
 
@@ -81,10 +80,15 @@ public class Main extends AbstractMojo {
      * @throws IOException
      *             If the mappings cannot be loaded.
      */
-    public JarMapping getSeargeToNumericMapping() throws IOException {
+    public JarMapping getSeargeToNumericMapping(RemapProperties fallbacks) throws IOException {
         JarMapping mapping = new JarMapping();
-        mapping.loadMappings(mcpDirectory, false, true, null, null);
+        mapping.loadMappings(print(fallbacks.withFallback(mcpDirectory, "mcpDirectory")), false, true, null, null);
         return mapping;
+    }
+
+    private String print(String string) {
+        getLog().info("JarMapping: " + string);
+        return string;
     }
 
 }
