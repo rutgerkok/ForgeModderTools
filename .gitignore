@@ -12,3 +12,6 @@
 *.project
 *.prefs
 *.properties
+
+# Other
+*.bat

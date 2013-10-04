@@ -68,7 +68,7 @@ public class Main extends AbstractMojo {
     /**
      * The Forge Mod Loader access transformer file/URL to use.
      */
-    @Parameter(defaultValue = "${fmleAccessTransformer}")
+    @Parameter(defaultValue = "${fmlAccessTransformer}")
     private String fmlAccessTransformer;
 
     /**

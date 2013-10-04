@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>nl.rutgerkok</groupId>
 	<artifactId>examplemod</artifactId>
-	<version>1.0</version>
+	<version>1.0.0</version>
 	<name>ExampleMod</name>
 	<description>Mod to demonstrate and test the tools</description>
 
@@ -12,12 +12,12 @@
 		<dependency>
 			<groupId>nl.rutgerkok</groupId>
 			<artifactId>forgejars</artifactId>
-			<version>${tforgeVersion}</version>
+			<version>${forgeVersion}</version>
 		</dependency>
 	</dependencies>
 
 	<properties>
-		<forgeVersion>9.11.0.884</forgeVersion>
+		<forgeVersion>9.11.1</forgeVersion>
 	</properties>
 
 	<build>

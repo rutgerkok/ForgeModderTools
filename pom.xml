@@ -4,7 +4,7 @@
 
 	<groupId>nl.rutgerkok</groupId>
 	<artifactId>forgeversionconstants</artifactId>
-	<version>9.11.0.884</version>
+	<version>9.11.1</version>
 	<packaging>pom</packaging>
 	<name>ForgeVersionConstants</name>
 	<description>Some constants for the latest Minecraft and Forge version.</description>
@@ -12,12 +12,14 @@
 	<properties>
 		<minecraftVersion>1.6.4</minecraftVersion>
 		<forgeVersion>${project.version}</forgeVersion>
-		<forgeCommit>be8bccc72eb080830fa57487987d48f0d36af3fa</forgeCommit>
-		<forgeModLoaderCommit>25981706ef12654b6c2baccc80fa2298bb5afb4a</forgeModLoaderCommit>
+		<forgeBuild>916</forgeBuild>
+		<forgeCommit>7d5d191fc2f735abcb4648a03800c80580d196f1</forgeCommit>
+		<forgeModLoaderCommit>5265e34a350adbb762264379f0134bfa40d33eaa</forgeModLoaderCommit>
 
+		<!-- Things below this line usually need no update -->
 		<minecraftClientUrl>http://s3.amazonaws.com/Minecraft.Download/versions/${minecraftVersion}/${minecraftVersion}.jar</minecraftClientUrl>
 		<minecraftServerUrl>http://s3.amazonaws.com/Minecraft.Download/versions/${minecraftVersion}/minecraft_server.${minecraftVersion}.jar</minecraftServerUrl>
-		<forgeUrl>http://files.minecraftforge.net/minecraftforge/minecraftforge-universal-${minecraftVersion}-${forgeVersion}.jar</forgeUrl>
+		<forgeUrl>http://files.minecraftforge.net/minecraftforge/minecraftforge-universal-${minecraftVersion}-${forgeVersion}.${forgeBuild}.jar</forgeUrl>
 		<mcpDirectory>https://raw.github.com/MinecraftForge/FML/${forgeModLoaderCommit}/conf/</mcpDirectory>
 		<fmlAccessTransformer>https://raw.github.com/MinecraftForge/FML/${forgeModLoaderCommit}/common/fml_at.cfg</fmlAccessTransformer>
 		<forgeAccessTransformer>https://raw.github.com/MinecraftForge/MinecraftForge/${forgeCommit}/common/forge_at.cfg</forgeAccessTransformer>
