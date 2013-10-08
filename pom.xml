@@ -25,4 +25,11 @@
 		<forgeAccessTransformer>https://raw.github.com/MinecraftForge/MinecraftForge/${forgeCommit}/common/forge_at.cfg</forgeAccessTransformer>
 	</properties>
 
+	<modules>
+		<module>forgejarcreator</module>
+		<module>forgejars</module>
+		<module>forgemodrenamer</module>
+		<module>examplemod</module>
+	</modules>
+
 </project>
