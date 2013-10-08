@@ -7,6 +7,22 @@
 	<name>ExampleMod</name>
 	<description>Mod to demonstrate and test the tools</description>
 
+	<!-- This repository contains ForgeJars -->
+	<repositories>
+		<repository>
+			<id>rutger-repo</id>
+			<url>http://www.rutgerkok.nl/repo</url>
+		</repository>
+	</repositories>
+
+	<!-- This reposotory contains ForgeModRenamer -->
+	<pluginRepositories>
+		<pluginRepository>
+			<id>rutger-repo</id>
+			<url>http://www.rutgerkok.nl/repo</url>
+		</pluginRepository>
+	</pluginRepositories>
+
 	<dependencies>
 		<!-- Add this dependency to build against the Forge jar -->
 		<dependency>
