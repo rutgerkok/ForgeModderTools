@@ -2,12 +2,15 @@ package nl.rutgerkok.forgemodrenamer;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import net.md_5.specialsource.Jar;
 import net.md_5.specialsource.JarMapping;
 import net.md_5.specialsource.JarRemapper;
 import net.md_5.specialsource.provider.JarProvider;
 
+import org.apache.maven.artifact.Artifact;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -57,10 +60,17 @@ public class Main extends AbstractMojo {
             throw new IOException("No artifact to rename. Expecting " + tempFile.getAbsolutePath());
         }
 
+        // Dependencies (for inheritance map)
+        List<File> dependencies = new ArrayList<File>();
+        dependencies.add(outputFile);
+        for (Artifact dependency : project.getDependencyArtifacts()) {
+            dependencies.add(dependency.getFile());
+        }
+
         // Mappings
         JarMapping mapping = getSeargeToNumericMapping(fallbacks);
         Jar inJar = Jar.init(outputFile);
-        mapping.setFallbackInheritanceProvider(new JarProvider(inJar));
+        mapping.setFallbackInheritanceProvider(new JarProvider(Jar.init(dependencies)));
 
         // Do the remap
         JarRemapper remapper = new JarRemapper(null, mapping);
