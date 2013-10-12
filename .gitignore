@@ -1,8 +1,5 @@
-# Compiled classes
-*.class
-
-
-# Package Files
+# Package files and directories
+*/target/*
 *.jar
 *.war
 *.ear
@@ -15,4 +12,5 @@
 
 # Other
 *.bat
-plugin*.xml
+*.class
+*/.gitignore
