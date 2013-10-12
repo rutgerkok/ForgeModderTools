@@ -4,17 +4,17 @@
 
 	<groupId>nl.rutgerkok</groupId>
 	<artifactId>forgeversionconstants</artifactId>
-	<version>9.11.1</version>
+	<version>9.11.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>ForgeVersionConstants</name>
 	<description>Some constants for the latest Minecraft and Forge version.</description>
 
 	<properties>
 		<minecraftVersion>1.6.4</minecraftVersion>
-		<forgeVersion>${project.version}</forgeVersion>
-		<forgeBuild>916</forgeBuild>
-		<forgeCommit>7d5d191fc2f735abcb4648a03800c80580d196f1</forgeCommit>
-		<forgeModLoaderCommit>5265e34a350adbb762264379f0134bfa40d33eaa</forgeModLoaderCommit>
+		<forgeVersion>9.11.1</forgeVersion>
+		<forgeBuild>923</forgeBuild>
+		<forgeCommit>465525119cb1c483c5dd59f9e0f9769969303ddd</forgeCommit>
+		<forgeModLoaderCommit>fc3e7647d2aff01146b1f5bd2ab6b57ef8e833e5</forgeModLoaderCommit>
 
 		<!-- Things below this line usually need no update -->
 		<minecraftClientUrl>http://s3.amazonaws.com/Minecraft.Download/versions/${minecraftVersion}/${minecraftVersion}.jar</minecraftClientUrl>

@@ -33,7 +33,7 @@
 	</dependencies>
 
 	<properties>
-		<forgeVersion>9.11.1</forgeVersion>
+		<forgeVersion>9.11.1-SNAPSHOT</forgeVersion>
 	</properties>
 
 	<build>
