@@ -7,13 +7,12 @@ First of all, *this project is in no way affliated with Forge or the Forge team.
 This project is aimed at modders using Minecraft Forge who want to use Maven to build their mod.
 
 ### Background
-Most people use MCP to build their mod. MCP does a wonderful job: using its mappings, it translates the obfuscated Minecraft jar
-into readable source code. However, if you just want to build a mod that works with Minecraft Forge, you can
+Most people use MCP to build their mod. MCP does a wonderful job: using its mappings, it translates the obfuscated Minecraft jar into readable source code. However, if you just want to build a mod that works with Minecraft Forge, you can
 simplify the building process. We'll still use the mappings of MCP, but not the scripts.
 
 To build mods for Forge, only two things are needed:
 
-1. An deobfuscated Minecraft jar with all methods added by Forge present.
+1. An deobfuscated Minecraft jar with all fields, methods and classes added by Forge present.
 2. Something that translates your compiled mod so that it works again with the obfuscated fields,
    methods and classes in Minecraft.
 
@@ -26,10 +25,75 @@ The amount of code you will find in this repo is rather limited. ForgeModderTool
 minecraft.jar and reobfuscate your mod. It does this using the [MCP](http://mcp.ocean-labs.de/) mappings.
 
 It also uses a modified version of [Javaxdelta](http://javaxdelta.sourceforge.net/). Javaxdelta is used to
-apply the binary patches to the minecraft.jar, so that methods and fields added by Forge to Minecrafts
+apply the binary patches of Minecraft Forge to the minecraft.jar, so that methods and fields added by Forge to Minecrafts
 classes become available.
 
+## Usage
+Add the following repository to the `pom.xml`:
+
+```xml
+	<repositories>
+		<repository>
+			<id>rutger-repo</id>
+			<url>http://www.rutgerkok.nl/repo</url>
+		</repository>
+	</repositories>
+```
+
+This repository is needed for ForgeJars. You'll also need to add this plugin repo:
+
+```xml
+	<pluginRepositories>
+		<pluginRepository>
+			<id>rutger-repo</id>
+			<url>http://www.rutgerkok.nl/repo</url>
+		</pluginRepository>
+	</pluginRepositories>
+```
+
+This repo is needed for the Maven plugin ForgeModRenamer. Maven uses separate repositories for dependencies and plugins, so you'll need to add both.
+
+Now you'll need to add ForgeJars as a dependency:
+
+```xml
+	<dependencies>
+		<dependency>
+			<groupId>nl.rutgerkok</groupId>
+			<artifactId>forgejars</artifactId>
+			<version>VERSION</version>
+		</dependency>
+	</dependencies>
+```
+
+This will be the jar you'll build against. Make sure to replace the `VERSION` with a valid Forge version. See [here](pom.xml#L7) for the latest version. You'll also need to add the ForgeModRenamer plugin:
+
+```xml
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>nl.rutgerkok</groupId>
+				<artifactId>forgemodrenamer-maven-plugin</artifactId>
+				<version>VERSION</version>
+				<executions>
+					<execution>
+						<id>remap-mod</id>
+						<phase>package</phase>
+						<goals>
+							<goal>forgemodrenamer</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+```
+
+This Maven plugin remaps your mod so that it works with the official minecraft.jar. Again, replace the `VERSION` with a valid Forge version.
+
+This should be everything you need. See the `pom.xml` of [ExampleMod](examplemod/pom.xml) for a complete example pom.
+
 ## Contents of each directory
+If you're interested in contributing to ForgeModderTools, this will give you some information.
 
 ### ForgeJars
 ForgeJars contains one file: the `pom.xml` file. In this file, all settings are present to generate
