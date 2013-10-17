@@ -29,7 +29,15 @@
 		<module>forgejarcreator</module>
 		<module>forgejars</module>
 		<module>forgemodrenamer</module>
-		<module>examplemod</module>
 	</modules>
+
+	<profiles>
+		<profile>
+			<id>with-examplemod</id>
+			<modules>
+				<module>examplemod</module>
+			</modules>
+		</profile>
+	</profiles>
 
 </project>
