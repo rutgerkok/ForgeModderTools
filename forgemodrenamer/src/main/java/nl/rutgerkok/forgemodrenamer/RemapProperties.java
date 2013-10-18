@@ -3,6 +3,7 @@ package nl.rutgerkok.forgemodrenamer;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+import java.util.logging.Logger;
 
 public class RemapProperties {
     private final Properties properties;
@@ -28,7 +29,11 @@ public class RemapProperties {
      */
     public RemapProperties(InputStream stream) throws IOException {
         properties = new Properties();
-        properties.load(stream);
+        if (stream != null){   
+            properties.load(stream);
+        } else {
+            Logger.getAnonymousLogger().severe("Properties Failed to load");
+        }
     }
 
     /**
