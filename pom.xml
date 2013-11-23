@@ -12,17 +12,17 @@
 	<properties>
 		<minecraftVersion>1.6.4</minecraftVersion>
 		<forgeVersion>9.11.1</forgeVersion>
-		<forgeBuild>923</forgeBuild>
-		<forgeCommit>465525119cb1c483c5dd59f9e0f9769969303ddd</forgeCommit>
-		<forgeModLoaderCommit>fc3e7647d2aff01146b1f5bd2ab6b57ef8e833e5</forgeModLoaderCommit>
+		<forgeBuild>964</forgeBuild>
+		<forgeCommit>54c440d75cf2d6a9be21f71008195673293e9741</forgeCommit>
+		<forgeModLoaderCommit>c2b919d339e5f63271cfb67a77235c21c5c3b80e</forgeModLoaderCommit>
 
 		<!-- Things below this line usually need no update -->
 		<minecraftClientUrl>http://s3.amazonaws.com/Minecraft.Download/versions/${minecraftVersion}/${minecraftVersion}.jar</minecraftClientUrl>
 		<minecraftServerUrl>http://s3.amazonaws.com/Minecraft.Download/versions/${minecraftVersion}/minecraft_server.${minecraftVersion}.jar</minecraftServerUrl>
-		<forgeUrl>http://files.minecraftforge.net/minecraftforge/minecraftforge-universal-${minecraftVersion}-${forgeVersion}.${forgeBuild}.jar</forgeUrl>
+		<forgeUrl>http://files.minecraftforge.net/maven/net/minecraftforge/forge/${minecraftVersion}-${forgeVersion}.${forgeBuild}/forge-${minecraftVersion}-${forgeVersion}.${forgeBuild}-universal.jar</forgeUrl>
 		<mcpDirectory>https://raw.github.com/MinecraftForge/FML/${forgeModLoaderCommit}/conf/</mcpDirectory>
-		<fmlAccessTransformer>https://raw.github.com/MinecraftForge/FML/${forgeModLoaderCommit}/common/fml_at.cfg</fmlAccessTransformer>
-		<forgeAccessTransformer>https://raw.github.com/MinecraftForge/MinecraftForge/${forgeCommit}/common/forge_at.cfg</forgeAccessTransformer>
+		<fmlAccessTransformer>https://raw.github.com/MinecraftForge/FML/${forgeModLoaderCommit}/src/main/resources/fml_at.cfg</fmlAccessTransformer>
+		<forgeAccessTransformer>https://raw.github.com/MinecraftForge/MinecraftForge/${forgeCommit}/src/main/resources/forge_at.cfg</forgeAccessTransformer>
 	</properties>
 
 	<modules>
