@@ -22,7 +22,7 @@
 			<name>Sonatype Nexus Snapshots</name>
 			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
 			<releases>
-				<enabled>false</enabled>
+				<enabled>true</enabled>
 			</releases>
 			<snapshots>
 				<enabled>true</enabled>
@@ -32,7 +32,7 @@
 		<!-- For LZMA -->
 		<repository>
 			<id>mojang-repo</id>
-			<url>http://s3.amazonaws.com/Minecraft.Download/libraries/</url>
+			<url>https://libraries.minecraft.net/</url>
 		</repository>
 	</repositories>
 
@@ -59,7 +59,7 @@
 		<dependency>
 			<groupId>net.md-5</groupId>
 			<artifactId>SpecialSource</artifactId>
-			<version>1.6-SNAPSHOT</version>
+			<version>1.6.1</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.guava</groupId>
