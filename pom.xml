@@ -12,9 +12,9 @@
 	<properties>
 		<minecraftVersion>1.7.2</minecraftVersion>
 		<forgeVersion>10.12.0</forgeVersion>
-		<forgeBuild>968</forgeBuild>
-		<forgeCommit>b7eac150cc478224af8f536ee3fef56832d588e4</forgeCommit>
-		<forgeModLoaderCommit>ec316f113fefef12f6defed9eb68de368d7f4420</forgeModLoaderCommit>
+		<forgeBuild>976</forgeBuild>
+		<forgeCommit>aa67bc5da65a3fc410d338edd0795b48b4e1fb74</forgeCommit>
+		<forgeModLoaderCommit>5d069629cf47cd04f2002b3b9a2c32b0ea73c26e</forgeModLoaderCommit>
 
 		<!-- Things below this line usually need no update -->
 		<minecraftClientUrl>http://s3.amazonaws.com/Minecraft.Download/versions/${minecraftVersion}/${minecraftVersion}.jar</minecraftClientUrl>
