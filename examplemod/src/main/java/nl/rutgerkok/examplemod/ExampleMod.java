@@ -1,7 +1,10 @@
 package nl.rutgerkok.examplemod;
 
+import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.init.Blocks;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -20,24 +23,23 @@ public class ExampleMod {
         System.out.println("Hello world! Example mod here!");
 
         // Just test some things that should get remapped
-        System.out.println("Slipperiness of ice is " + Block.ice.slipperiness);
+        System.out.println("Name of ice is " + Blocks.ice.func_149739_a());
         TestBlock testBlock = new TestBlock();
         GameRegistry.registerBlock(testBlock, "testBlock");
 
         // Calling inherited methods should work too
-        testBlock.getTickRandomly();
+        testBlock.quantityDropped(0, 0, new Random());
     }
 
     public static class TestBlock extends Block {
 
         public TestBlock() {
-            super(3000, Material.rock);
+            super(Material.field_151576_e);
         }
 
         @Override
-        public boolean getTickRandomly() {
-            // Methods can be overriden - they will be renamed automatically
-            return false;
+        public int quantityDropped(int i, int j, Random random) {
+            return 2;
         }
 
     }
